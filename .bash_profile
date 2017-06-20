@@ -25,6 +25,7 @@ alias pop-booty="git stash pop"
 alias toss-booty="git stash drop"
 alias be="bundle exec"
 alias snap-prod="bundle exec rake db:snapshot:import"
+alias nr="npm run"
 
 # ----------
 # Functions
