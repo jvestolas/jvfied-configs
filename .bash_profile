@@ -26,6 +26,12 @@ alias toss-booty="git stash drop"
 alias be="bundle exec"
 alias snap-prod="bundle exec rake db:snapshot:import"
 alias nr="npm run"
+alias rTest="find test/ -name '*_test.rb' | xargs -n1 -I{} bundle exec ruby -Itest {}"
+alias yup="yarn upgrade $1"
+alias ffm="git merge $1 --ff-only"
+alias nl="npm list $1"
+alias retrace="git reflog"
+#alias symlink="ln -s $(pwd)/$1 $2"
 
 # ----------
 # Functions
@@ -46,12 +52,8 @@ function _v {
     vi ~/.vimrc
 }
 
-function whereis_gnm {
+function find_nm {
     npm list -g | grep $1
-}
-
-function whereis_nm {
-    npm list $1
 }
 
 function phresh {
@@ -85,4 +87,21 @@ function smoosh {
 
 function snap-import {
     bundle exec rake db:snapshot:import[\'$1\']
+}
+
+function burn {
+    echo "Force-deleting branch: $1"
+    git branch -D $1
+}
+
+function precompile {
+    printf "Precompiling Rails assets...\nHEY! CLEAR ASSETS AFTERWARDS IF NECESSARY!"
+    bundle exec rake assets:precompile
+}
+
+function clobberin_time {
+    printf "\nIt's clobberin' time!\n\nDestroying Rails assets...\n"
+    bundle exec rake assets:clobber
+    printf "\nDestroying Rails temporary cache...\n"
+    bundle exec rake tmp:cache:clear
 }
