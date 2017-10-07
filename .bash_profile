@@ -25,13 +25,20 @@ alias pop-booty="git stash pop"
 alias toss-booty="git stash drop"
 alias be="bundle exec"
 alias snap-prod="bundle exec rake db:snapshot:import"
-alias nr="npm run"
-alias rTest="find test/ -name '*_test.rb' | xargs -n1 -I{} bundle exec ruby -Itest {}"
+alias rTest="find test/ -name '*_test.rb' | xargs -n1 -I{} bundle exec ruby
+-Itest {}"
 alias yup="yarn upgrade $1"
 alias ffm="git merge $1 --ff-only"
 alias nl="npm list $1"
+alias gl="git log"
 alias retrace="git reflog"
 #alias symlink="ln -s $(pwd)/$1 $2"
+alias ar_rollback="be rake db:rollback STEP=$1"
+alias variance="git diff $1"
+alias nr="npm run $1"
+alias cl_known_hosts="sed -i'' -e '/s-/d' ~/.ssh/known_hosts"
+#alias overkill="kill -9 $(ps aux | grep $1 | grep -v grep | awk '{print $2}')"
+alias kill-spring="ps aux | awk '/spring/ {print $2}' | xargs kill"
 
 # ----------
 # Functions
