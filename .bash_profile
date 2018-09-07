@@ -6,10 +6,6 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/bin:$PATH"
 
 eval "$(rbenv init -)"
-export CH_USER="jv@coverhound.com"
-
-# homebrew
-export PATH="/usr/local/Cellar/bcrypt/1.1/bin:$PATH"
 
 # --------
 # Git Aliases
