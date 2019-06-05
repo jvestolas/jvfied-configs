@@ -6,6 +6,12 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/bin:$PATH"
 
 eval "$(rbenv init -)"
+eval "$(nodenv init -)"
+
+# bcypt
+# pip install bcrypt
+export PATH="/usr/local/Cellar/bcrypt/1.1/bin:$PATH"
+export EDITOR=atom
 
 # --------
 # Git Aliases
@@ -15,6 +21,7 @@ alias _v="vi ~/.vimrc"
 alias ll="ls -al"
 alias phresh="git checkout -b $1"
 alias st="ps -ax | grep $1"
+alias pstats="netstat -vanp tcp | grep $1"
 alias ports="lsof -iTCP -sTCP:LISTEN -P"
 alias gs="git status"
 alias go="git checkout $1"
@@ -36,7 +43,6 @@ alias ruby_tests="find test/ -name '*_test.rb' | xargs -n1 -I{} bundle exec ruby
 alias yup="yarn upgrade $1"
 alias ffm="git merge $1 --ff-only"
 alias nl="npm list $1"
-alias gl="git log"
 alias retrace="git reflog"
 alias ar_rollback="be rake db:rollback STEP=$1"
 alias varia="git diff $1"
@@ -61,29 +67,14 @@ alias git-away="rm -rf .git"
 alias git-home="git checkout master"
 alias tracks="be rake routes | grep $1"
 alias symlink="ln -s $1 $2"
+alias search="find ~/ -iname $1"
+alias remove_known_host="ssh-keygen -R $1"
 
 # ----------
 # Functions
 # ----------
 function kill_port {
     kill -9 $(lsof -t -i:$1)
-}
-
-function release_the_kraken {
-    printf "* * * HAMMERTIME! * * *\n"
-    printf "* * * checking out to production * * *\n"
-    git checkout production
-
-    printf "* * * pulling production * * *"
-    git pull origin production
-
-    printf "* * * merging master into production * * *\n"
-    git merge master --ff-only
-
-    printf "* * * pushing to remote production * * *\n"
-    git push origin production
-
-    printf "* * * DONE! It's Leeroy Jenkins time! * * *\n\n"
 }
 
 function toss-booty {
@@ -114,56 +105,20 @@ function my_docs {
   cd ~/Documents/$1
 }
 
-function s-restart {
-    printf "restarting the following staging server: $1 \n"
-    bundle exec cap $1 deploy:restart
-}
-
-function s-dep {
-    printf "executing the following command: branch=$1 bundle exec cap $2
-    deploy\n"
-    branch=$1 bundle exec cap $2 deploy
-}
-
-function snap-import {
-    printf "\n fetching active record snapshot $1"
-    bundle exec rake db:snapshot:import[\'$1\']
-}
-
-function revlog {
-    if [ $# -eq 0 ]
-        then
-            echo "Missing arguments staging_name and project_name"
-            return
-    fi
-
-    project_name=$2
-    echo "fetching last ten lines of server revisions log..."
-
-    if [ $# -eq 1 ]
-        then
-            project_name="coverhound"
-    fi
-
-    ssh $1 tail -10 "/mnt/${project_name}/revisions.log"
-}
-
 function burn {
     echo "Force-deleting branch: $1"
     git branch -D $1
 }
 
-function precompile {
-    printf "Precompiling Rails assets...\nHEY! CLEAR ASSETS AFTERWARDS IF
-    NECESSARY!"
-    bundle exec rake assets:precompile
-}
-
 function clobberin_time {
     printf "\nIt's clobberin' time!\n\nDestroying Rails assets...\n"
     bundle exec rake assets:clobber
+    printf "\nCleaning assets..."
+    bundle exec rake assets:clean
     printf "\nDestroying Rails temporary cache...\n"
     bundle exec rake tmp:cache:clear
+    printf "\nClearing Rails cache"
+    bundle exec rake tmp:clear
     printf "Dun dun dun DONE!!!\n"
 }
 
