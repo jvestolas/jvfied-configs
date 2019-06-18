@@ -1,16 +1,19 @@
+# Uncomment after installing nvm
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# Uncomment after installing Node
+# export PATH="/usr/local/bin:$PATH"
 
-# node
-export PATH="/usr/local/bin:$PATH"
-
-eval "$(rbenv init -)"
-eval "$(nodenv init -)"
+# rbenv
+# eval "$(rbenv init -)"
+# eval "$(nodenv init -)"
 
 # bcypt
 # pip install bcrypt
-export PATH="/usr/local/Cellar/bcrypt/1.1/bin:$PATH"
+# export PATH="/usr/local/Cellar/bcrypt/1.1/bin:$PATH"
+
 export EDITOR=atom
 
 # --------
@@ -51,7 +54,9 @@ alias nr-local="PATH=$(npm bin):$PATH $1"
 alias cl_known_hosts="sed -i'' -e '/s-/d' ~/.ssh/known_hosts"
 alias overkill="kill -9 $1"
 alias kill-spring="ps aux | awk '/spring/ {print $1}' | xargs kill"
-alias pgstart="postgres -D /usr/local/var/postgres"
+alias pgstart="pg_ctl -D /usr/local/var/postgres/ -l logfile start" # To launch posgresql without background service
+alias pgpersist="brew services start postgresql" # To launch postgresql now and restart at login
+alias pgstop="brew services stop postgresql"
 alias vb_rails="be rails s -b 0.0.0.0"
 alias brails="be rails s"
 alias crails="be rails c"
@@ -69,6 +74,7 @@ alias tracks="be rake routes | grep $1"
 alias symlink="ln -s $1 $2"
 alias search="find ~/ -iname $1"
 alias remove_known_host="ssh-keygen -R $1"
+alias users="awk -F: '{ print $1}' /etc/passwd"
 
 # ----------
 # Functions
